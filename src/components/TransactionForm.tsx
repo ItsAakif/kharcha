@@ -38,6 +38,18 @@ const categories: TransactionCategory[] = [
 export default function TransactionForm({ transaction, onSubmit, onCancel }: TransactionFormProps) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   
+  const getCategoryColor = (category: string) => {
+    const colors = {
+      Food: 'bg-green-500',
+      Rent: 'bg-blue-500',
+      Shopping: 'bg-purple-500',
+      Utilities: 'bg-yellow-500',
+      Transport: 'bg-red-500',
+      Other: 'bg-gray-500',
+    };
+    return colors[category as keyof typeof colors] || colors.Other;
+  };
+  
   const {
     register,
     handleSubmit,
@@ -122,18 +134,28 @@ export default function TransactionForm({ transaction, onSubmit, onCancel }: Tra
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="category">Category</Label>
+            <Label htmlFor="category" className="font-medium text-gray-700">Category</Label>
             <Select
               value={selectedCategory}
               onValueChange={(value) => setValue('category', value as TransactionCategory)}
             >
-              <SelectTrigger>
-                <SelectValue placeholder="Select a category" />
+              <SelectTrigger className="w-full">
+                <SelectValue placeholder="Select a category">
+                  {selectedCategory && (
+                    <span className="flex items-center gap-2">
+                      <span className={`w-3 h-3 rounded-full ${getCategoryColor(selectedCategory)}`} />
+                      {selectedCategory}
+                    </span>
+                  )}
+                </SelectValue>
               </SelectTrigger>
-              <SelectContent>
+              <SelectContent className="bg-white">
                 {categories.map((category) => (
-                  <SelectItem key={category} value={category}>
-                    {category}
+                  <SelectItem key={category} value={category} className="cursor-pointer">
+                    <span className="flex items-center gap-3 w-full">
+                      <span className={`w-4 h-4 rounded-full ${getCategoryColor(category)} flex-shrink-0`} />
+                      <span className="font-medium text-gray-900">{category}</span>
+                    </span>
                   </SelectItem>
                 ))}
               </SelectContent>
