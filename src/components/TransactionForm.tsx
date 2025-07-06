@@ -20,6 +20,8 @@ const transactionSchema = z.object({
 
 type TransactionFormData = z.infer<typeof transactionSchema>;
 
+type TransactionFormData = z.infer<typeof transactionSchema>;
+
 interface TransactionFormProps {
   transaction?: ITransaction;
   onSubmit: (data: TransactionFormData) => Promise<void>;
