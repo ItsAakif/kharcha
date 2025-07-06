@@ -1,25 +1,28 @@
 import mongoose from 'mongoose';
 
-const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/kharcha';
+import process from 'process';
+
+const MONGODB_URI = process.env.MONGODB_URI!;
 
 if (!MONGODB_URI) {
-  throw new Error('Please define the MONGODB_URI environment variable');
+  throw new Error('Please define the MONGODB_URI environment variable inside .env.local');
 }
 
-declare global {
-  var mongoose: {
-    conn: mongoose.Mongoose | null;
-    promise: Promise<mongoose.Mongoose> | null;
-  };
+interface CachedConnection {
+  conn: mongoose.Connection | null;
+  promise: Promise<mongoose.Connection> | null;
 }
 
-let cached = globalThis.mongoose;
+
+
+// Use a more explicit approach to avoid global typing issues
+let cached: CachedConnection = (global as any).mongoose;
 
 if (!cached) {
-  cached = globalThis.mongoose = { conn: null, promise: null };
+  cached = (global as any).mongoose = { conn: null, promise: null };
 }
 
-async function connectDB() {
+async function connectDB(): Promise<mongoose.Connection> {
   if (cached.conn) {
     return cached.conn;
   }
@@ -30,11 +33,17 @@ async function connectDB() {
     };
 
     cached.promise = mongoose.connect(MONGODB_URI, opts).then((mongoose) => {
-      return mongoose;
+      return mongoose.connection;
     });
   }
 
-  cached.conn = await cached.promise;
+  try {
+    cached.conn = await cached.promise;
+  } catch (e) {
+    cached.promise = null;
+    throw e;
+  }
+
   return cached.conn;
 }
 
