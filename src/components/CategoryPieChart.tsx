@@ -52,7 +52,7 @@ export default function CategoryPieChart({ transactions }: CategoryPieChartProps
         <div className="bg-background border border-border rounded-lg p-3 shadow-lg">
           <p className="font-medium">{data.name}</p>
           <p className="text-primary">
-            Amount: ${data.value.toFixed(2)}
+            Amount: ₹{data.value.toFixed(2)}
           </p>
           <p className="text-muted-foreground">
             {data.percentage.toFixed(1)}% of total
@@ -104,7 +104,7 @@ export default function CategoryPieChart({ transactions }: CategoryPieChartProps
       <CardHeader>
         <CardTitle>Expenses by Category</CardTitle>
         <p className="text-sm text-muted-foreground">
-          Total: ${totalAmount.toFixed(2)}
+          Total: ₹{totalAmount.toFixed(2)}
         </p>
       </CardHeader>
       <CardContent>
@@ -143,7 +143,7 @@ export default function CategoryPieChart({ transactions }: CategoryPieChartProps
                 <span>{item.name}</span>
               </div>
               <div className="text-right">
-                <span className="font-medium">${item.value.toFixed(2)}</span>
+                <span className="font-medium">₹{item.value.toFixed(2)}</span>
                 <span className="text-muted-foreground ml-2">
                   ({item.percentage.toFixed(1)}%)
                 </span>

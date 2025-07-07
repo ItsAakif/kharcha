@@ -68,13 +68,13 @@ export default function BudgetChart({ transactions, budgets, selectedMonth }: Bu
         <div className="bg-background border border-border rounded-lg p-3 shadow-lg">
           <p className="font-medium">{label}</p>
           <p className="text-blue-600">
-            Budget: ${data.budget.toFixed(2)}
+            Budget: ₹{data.budget.toFixed(2)}
           </p>
           <p className="text-green-600">
-            Actual: ${data.actual.toFixed(2)}
+            Actual: ₹{data.actual.toFixed(2)}
           </p>
           <p className={`${data.difference >= 0 ? 'text-green-600' : 'text-red-600'}`}>
-            {data.difference >= 0 ? 'Under' : 'Over'} by: ${Math.abs(data.difference).toFixed(2)}
+            {data.difference >= 0 ? 'Under' : 'Over'} by: ₹{Math.abs(data.difference).toFixed(2)}
           </p>
           <p className="text-muted-foreground">
             Used: {data.percentageUsed}%
@@ -132,7 +132,7 @@ export default function BudgetChart({ transactions, budgets, selectedMonth }: Bu
             />
             <YAxis 
               tick={{ fontSize: 12 }}
-              tickFormatter={(value) => `$${value}`}
+              tickFormatter={(value) => `₹${value}`}
             />
             <Tooltip content={<CustomTooltip />} />
             <Bar 

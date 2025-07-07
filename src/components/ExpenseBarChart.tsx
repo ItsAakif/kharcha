@@ -57,7 +57,7 @@ export default function ExpenseBarChart({ transactions }: ExpenseBarChartProps) 
         <div className="bg-background border border-border rounded-lg p-3 shadow-lg">
           <p className="font-medium">{label}</p>
           <p className="text-primary">
-            Expenses: ${payload[0].value.toFixed(2)}
+            Expenses: ₹{payload[0].value.toFixed(2)}
           </p>
         </div>
       );
@@ -83,8 +83,8 @@ export default function ExpenseBarChart({ transactions }: ExpenseBarChartProps) 
       <CardHeader>
         <CardTitle>Monthly Expenses</CardTitle>
         <div className="flex gap-4 text-sm text-muted-foreground">
-          <span>Total: ${totalExpenses.toFixed(2)}</span>
-          <span>Avg/Month: ${averageMonthly.toFixed(2)}</span>
+          <span>Total: ₹{totalExpenses.toFixed(2)}</span>
+          <span>Avg/Month: ₹{averageMonthly.toFixed(2)}</span>
         </div>
       </CardHeader>
       <CardContent>
@@ -108,7 +108,7 @@ export default function ExpenseBarChart({ transactions }: ExpenseBarChartProps) 
             />
             <YAxis 
               tick={{ fontSize: 12 }}
-              tickFormatter={(value) => `$${value}`}
+              tickFormatter={(value) => `₹${value}`}
             />
             <Tooltip content={<CustomTooltip />} />
             <Bar 
